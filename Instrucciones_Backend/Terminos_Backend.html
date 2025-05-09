@@ -1,0 +1,54 @@
+<!-- Terminos del Backend -->
+
+ <p>NODE: es un entorno de desarrollo que permite levantar un servidor virtual y generar un servidor
+    "No es un lenguaje de programacion". Nos da todas las herramientas para generar un servidor.</p>
+
+ <p>API ("interfaz de programacion de aplicaciones") es una aplicacion desde el lado del servidor</p>
+ <p>Hay distintos tipos de API:
+   1- Publicas
+   2- Privadas
+   3- Sincronicas y Asincronicas (Asincronicas = JS)
+    "Promesas" (en las API siempre hay una promesa que se deve cumplir)
+ </p>
+
+ <p>REQUEST: es una solicitud que va desde el frontend al backend (del cliente al servidor)
+    El servidor toma esa solicitud, la procesa, la soluciona y manda una respuesta. Esa respuesta 
+    siempre va acompañada de un codigo (status code)
+     (busca tres cosas: 1-Ruta, 2-Metodo, 3- )
+ </p>
+
+ <p>STATUS CODE: codigo de tres digitos que el servidor envia al navegador despues de que este 
+    realiza una solicitud (mensajes de error/confirmacion) => los más usados:
+    200: 
+    201: 
+    400: 
+    404: 
+    409: 
+    500: 
+    504: 
+ </p>
+
+ <p>METODOS HTTP: es un protocolo que permite la comunicacion entre uno o mas dispositivos 
+    permitiendo que entre ellos se envien informacion, puede ser (texto plano y/o multimedia) 
+
+    <!-- TIPOS DE METODOS: (sirven para hacer el Crud) -->
+    GET: Sirve para Obtener/Leer
+    POST: Sirve para Crear
+    PUT: Sirve para Actualizar (modificaciones grandes)
+    DELETE: Sirve para Eliminar
+    OPTIONS:
+    HEAD:
+    PATCH: Sirve para Actualizar (modificaciones pequeñas)
+</p>
+
+<p>Como Funciona el Backend: El Servidor busca por cuatro lados la informacion:
+    1- si la informacion viaja como objeto busca en el Body
+    2- si la informacion va por la URL va por la Query/Params
+    3- si la informacion viaja por la cabecera va en el Header
+</p>
+
+<p>STACK: es un conjunto de tecnologias ("MERN")
+    M: MongoDB => motor de base de datos orientada a documentos (trabaja a traves de colecciones)
+    E: Express => framework que se utiliza en Node (permite crear una aplicacion backend)
+    R: React => biblioteca se utiliza en el frontend (crea interfaces de usuario)
+    N: Node => Entorno de ejecucion que se utiliza tanto en el frontend y el backend </p>
