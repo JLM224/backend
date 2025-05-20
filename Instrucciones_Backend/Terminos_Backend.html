@@ -11,11 +11,22 @@
     "Promesas" (en las API siempre hay una promesa que se deve cumplir)
  </p>
 
+  <p>
+   Request: req => solicitud del cliente (front) al servidor (back)
+   Response: res => respuesta del servidor (back) al cliente (front)
+   La response siempre va acompañada de un metodo status que indica el resultado final de la response
+</p>
+
  <p>REQUEST: es una solicitud que va desde el frontend al backend (del cliente al servidor)
     El servidor toma esa solicitud, la procesa, la soluciona y manda una respuesta. Esa respuesta 
     siempre va acompañada de un codigo (status code)
      (busca tres cosas: 1-Ruta, 2-Metodo, 3- )
  </p>
+
+<p>
+   Endpoint: (funcion donde la solicitud del cliente va a ser procesada y se le da una solucion)
+   tiene ruta y controlador
+</p>
 
  <p>STATUS CODE: codigo de tres digitos que el servidor envia al navegador despues de que este 
     realiza una solicitud (mensajes de error/confirmacion) => los más usados:
@@ -52,3 +63,33 @@
     E: Express => framework que se utiliza en Node (permite crear una aplicacion backend)
     R: React => biblioteca se utiliza en el frontend (crea interfaces de usuario)
     N: Node => Entorno de ejecucion que se utiliza tanto en el frontend y el backend </p>
+
+
+<p>Crud
+   C => Create : Crear
+   R => Read : Leer
+   U => Update : Actualizar
+   D => Delete : Borrar
+
+   ABM
+   A => Alta
+   B => Baja
+   M => Modificacion
+</p>
+
+<p>La solicitud (req) se divide en tres partes: 
+   Head => token
+   Params => parametro (id)
+   Query => (no modifico la ruta, pero recibo algo informativo "?")
+   Body => es el cuerpo (formulario, imagenes, usuario)
+</p>
+
+<p>
+   Middlwares => es una funcion que esta entre el backend y frontend (entre la ruta y el controlador) 
+</p>
+
+<p>
+   Logica del negocio => los controladores son responsables de recibir las peticiones, interactuar 
+   con los servicios y enviar respuestas, por otra parte, los servicios se encargan de manejar 
+   la logica del negocio.
+</p>
