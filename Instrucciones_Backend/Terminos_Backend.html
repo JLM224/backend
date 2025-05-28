@@ -93,3 +93,21 @@
    con los servicios y enviar respuestas, por otra parte, los servicios se encargan de manejar 
    la logica del negocio.
 </p>
+
+<!-- ESQUEMAS Y MODELOS -->
+ <!-- Esquemas => es una clase donde se programa como va a ser el modelo, este esquema puede 
+  recibir mucha informacion de configuracion. -->
+  <!-- EJ de esquema: "un objeto (propiedad nombreUsuario) se lo configura que sera un dato
+   de tipo string, tendra un maxlength de 15 caracteres, luego con el trim se le borra los 
+   espacios en blanco, con el match se le dice que acepte letras y numeros." -->
+
+  <!-- Modelos => es una instancia del esquema (cada vez que se crea un objeto, se crea una 
+   instancia del esquema)-->
+   <!-- Ej de modelo: "un array de productos, cuando hay una solicitud del frontend 
+   se la pasa al esquema y este analiza esa solicitud, si coincide con la configuracion nuestra,
+   en caso de que si coincida, se la pasa al modelo para que la guarde en la base de datos" -->
+
+   <!-- DOBLE VALIDACION => lo mismo que se valida en el backend se debe validar en el frontend -->
+
+   <!-- PROPIEDADES IMPORTANTES -->
+    <!-- Default =>  -->

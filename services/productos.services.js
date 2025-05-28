@@ -20,7 +20,7 @@ const obtenerTodosLosProductosServices = () => {
     };
 };
 
-const ObtenerProductoPorIdServices = (idProducto) => {
+const ObtenerProductoPorIDServices = (idProducto) => {
     const producto = productos.find((prod) => prod.id === Number(idProducto))
 
     return{
@@ -45,15 +45,12 @@ const crearNuevoProductoServices = (body) => {
     };
 };
 
-const actualizarProductoPorIdServices = (idProducto, body) => {
-    const idProducto = Number(idProducto);
-    const body = body;
-
+const actualizarProductoPorIDServices = (idProducto, body) => {
     //findIndex devuelve la posicion del elemento en el array
-    const indexProd = productos.findIndex((prod) => prod.id === idProducto)
+    const indexProd = productos.findIndex((prod) => prod.id === (idProducto));
 
     // para saber el producto que se quiere modificar
-    const producto = productos.find((prod) => prod.id === idProducto)
+    const producto = productos.find((prod) => prod.id === Number(idProducto));
 
     //desestructurar body
     const {nombre, descripcion, precio} = body
@@ -73,9 +70,8 @@ const actualizarProductoPorIdServices = (idProducto, body) => {
     }
 }
 
-const eliminarProductoPorIdServices = (idProducto) => {
-    const idProducto = Number(idProducto);
-    const indexProd = productos.findIndex((prod) => prod.id === idProducto)
+const eliminarProductoPorIDServices = (idProducto) => {
+    const indexProd = productos.findIndex((prod) => prod.id === Number(idProducto))
 
     productos.splice(indexProd, 1);
 
@@ -87,8 +83,8 @@ const eliminarProductoPorIdServices = (idProducto) => {
 
 module.exports = {
     obtenerTodosLosProductosServices,
-    ObtenerProductoPorIdServices,
+    ObtenerProductoPorIDServices,
     crearNuevoProductoServices,
-    actualizarProductoPorIdServices,
-    eliminarProductoPorIdServices,
+    actualizarProductoPorIDServices,
+    eliminarProductoPorIDServices,
 }

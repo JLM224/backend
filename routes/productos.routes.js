@@ -1,23 +1,24 @@
 //router para las rutas de productos (1era forma)
 const express = require("express");
-const { obtenerTodosLosProductos, 
-    ObtenerProductoPorId, 
+const { 
+    obtenerTodosLosProductos, 
+    obtenerUnProductoPorID, 
     crearNuevoProducto,
-    actualizarProductoPorId, 
-    eliminarProductoPorId }
+    actualizarProductoPorID,
+    eliminarUnProductoPorID}
     = require("../controllers/productos.controllers");
-const router = express.Router()
+const router = express.Router();
 
 
 // obtener todos los productos
 router.get("/",obtenerTodosLosProductos);
 // obtener producto por id
-router.get("/:id",ObtenerProductoPorId);
+router.get("/:id",obtenerUnProductoPorID);
 // crear producto
 router.post("/", crearNuevoProducto);
 // actualizar producto
-router.put("/:id", actualizarProductoPorId);
+router.put("/:id", actualizarProductoPorID);
 // eliminar producto
-router.delete("/:id", eliminarProductoPorId);
+router.delete("/:id", eliminarUnProductoPorID);
 
 module.exports = router;

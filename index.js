@@ -1,3 +1,4 @@
+require("./db/config.db")
 const express = require("express")
 const app = express() //se ejecuta express como un metodo, retorna un objeto
 
