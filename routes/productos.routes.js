@@ -7,11 +7,12 @@ const {
     actualizarProductoPorID,
     eliminarUnProductoPorID}
     = require("../controllers/productos.controllers");
+const authMiddleware = require("../middlewars/auth.middleware");
 const router = express.Router();
 
 
 // obtener todos los productos
-router.get("/",obtenerTodosLosProductos);
+router.get("/", authMiddleware("admin") ,obtenerTodosLosProductos);
 // obtener producto por id
 router.get("/:id",obtenerUnProductoPorID);
 // crear producto
