@@ -6,10 +6,12 @@ const {
     obtenerUsuarioPorIdServices,
     crearNuevoUsuarioServices,
     iniciarSesionServices,
+    actualizarUsuarioPorIdServices,
+    eliminarUsuarioPorIdServices,
  } = require("../services/usuarios.services")
 
 const obtenerTodosLosUsuarios = async (req,res) => {
-  const {statusCode, usuarios} = await obtenerTodosLosUsuariosServices
+  const {statusCode, usuarios} = await obtenerTodosLosUsuariosServices();
     res.status(statusCode).json({usuarios})
 }
 
@@ -28,10 +30,25 @@ const iniciarSesion = async (req, res) => {
     res.status(statusCode).json({msg, token});
 }
 
+const actualizarUsuario = async (req, res) => {
+    const {statusCode, msg} = await actualizarUsuarioPorIdServices(
+        req.params.id,
+        req.body
+    );
+    res.status(statusCode).json({msg})
+}
+
+const eliminarUsuarioPorId = async (req, res) => {
+    const {statusCode, msg} = await eliminarUsuarioPorIdServices(req.params.id);
+    res.status(statusCode).json({msg});
+}
+
 // exportamos controladores
 module.exports = {
     obtenerTodosLosUsuarios,
     obtenerUsuarioPorId,
     crearNuevoUsuario,
     iniciarSesion,
+    actualizarUsuario,
+    eliminarUsuarioPorId
 }

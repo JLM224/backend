@@ -1,10 +1,10 @@
 const UsuariosModel = require("../models/usuarios.model")
 const argon = require("argon2");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { eliminarProductoPorIDServices } = require("./productos.services");
 
 const obtenerTodosLosUsuariosServices = async() => {
     const usuarios = await UsuariosModel.find()
-
     return{
         usuarios,
         statusCode: 200
@@ -13,7 +13,6 @@ const obtenerTodosLosUsuariosServices = async() => {
 
 const obtenerUsuarioPorIdServices = async(idUsuario) => {
     const usuario = await UsuariosModel.findOne({_id: idUsuario})
-
     return{
         usuario,
         statusCode: 200
@@ -26,7 +25,6 @@ const crearNuevoUsuarioServices = async(body) => {
     nuevoUsuario.contrasenia = await argon.hash(nuevoUsuario.contrasenia);
     // se guarda el nuevoUsuario
     await nuevoUsuario.save();
-
     return{
         msg:"Usuario creado exitosamente",
         statusCode: 201,
@@ -70,7 +68,23 @@ const iniciarSesionServices = async (body) => {
     return{
         msg:"Usuario Logueado",
         token,
-        statusCode: 200,
+        statusCode: 200
+    }
+}
+
+const actualizarUsuarioPorIdServices = async (idUsuario, body) => {
+    await UsuariosModel.findByIdAndUpdate({_id: idUsuario}, body)
+    return{
+        msg:"Usuario actualizado exitosamente",
+        statusCode: 200
+    }
+}
+
+const eliminarUsuarioPorIdServices = async (idUsuario) => {
+    await UsuariosModel.findByIdAndDelete({_id: idUsuario})
+    return{
+        msg:"Usuario eliminado exitosamente",
+        statusCode:200
     }
 }
 
@@ -80,4 +94,6 @@ module.exports = {
     obtenerUsuarioPorIdServices,
     crearNuevoUsuarioServices,
     iniciarSesionServices,
+    actualizarUsuarioPorIdServices,
+    eliminarUsuarioPorIdServices
 }

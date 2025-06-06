@@ -43,5 +43,5 @@ module.exports = {
   obtenerUnProductoPorID,
   crearNuevoProducto,
   actualizarProductoPorID,
-  eliminarUnProductoPorID,
+  eliminarUnProductoPorID
 };

@@ -1,4 +1,4 @@
-const ProductoModel = require("../models/producto.model");
+const ProductosModel = require("../models/producto.model");
 
 // Productos
 // const productos = [{
@@ -15,8 +15,8 @@ const ProductoModel = require("../models/producto.model");
 // },
 // ];
 
-const obtenerTodosLosProductosServices = async() => {
-    const productos = await ProductoModel.find()
+const obtenerTodosLosProductosServices = async () => {
+    const productos = await ProductosModel.find();
     // find devuelve un array con todos los elementos de la coleccion
     return{
         productos,
@@ -25,7 +25,7 @@ const obtenerTodosLosProductosServices = async() => {
 };
 
 const ObtenerProductoPorIDServices = async (idProducto) => {
-    const Producto = await ProductoModel.findOne({_id: idProducto});
+    const producto = await ProductosModel.findOne({_id: idProducto});
     // findOne devuelve un objeto dentro de la coleccion
 
     // const producto = productos.find((prod) => prod.id === Number(idProducto))
@@ -37,8 +37,9 @@ const ObtenerProductoPorIDServices = async (idProducto) => {
 }
 
 const crearNuevoProductoServices = async (body) => {
-    const nuevoProducto = new ProductoModel(body)
+    const nuevoProducto = new ProductosModel(body)
     await nuevoProducto.save();
+    console.log(nuevoProducto)
     // const nuevoProducto = {
     //     //(obtener el ultimo elemento del array)
     //     id: productos[productos.length - 1]?.id + 1 || 1,
@@ -55,7 +56,7 @@ const crearNuevoProductoServices = async (body) => {
 };
 
 const actualizarProductoPorIDServices = async (idProducto, body) => {
-    await ProductoModel.findByIdAndUpdate()
+    await ProductosModel.findByIdAndUpdate({_id: idProducto}, body)
     //findByIdAndUpdate metodo que busca por id y actualiza (primero recibe el id y luego el body)
 
     // //findIndex devuelve la posicion del elemento en el array
@@ -83,7 +84,7 @@ const actualizarProductoPorIDServices = async (idProducto, body) => {
 }
 
 const eliminarProductoPorIDServices = async (idProducto) => {
-    await ProductoModel.findByIdAndDelete({_id:idProducto})
+    await ProductosModel.findByIdAndDelete({_id: idProducto})
     //findByIdAndDelete busca el producto y lo borra (se le pasa el id)
 
     // const indexProd = productos.findIndex((prod) => prod.id === Number(idProducto))

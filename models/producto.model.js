@@ -9,7 +9,7 @@ const ProductoSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        match: /a-zA-Z0-9/
+        // match: /a-zA-Z0-9/
     },
     precio: {
         type: Number,
@@ -38,6 +38,6 @@ const ProductoSchema = new mongoose.Schema({
 // De mongoose se extrae el modulo "model" donde le ponemos que va a buscar en la base de datos
 // Le decimos que todo lo que se guarde en la coleccion de "productos" se verifique con el esquema 
 // anteriormente configurado.
-const ProductoModel = mongoose.model("productos", ProductoSchema)
+const ProductosModel = mongoose.model("productos", ProductoSchema)
 // lo exportamos
-module.exports = ProductoModel;
+module.exports = ProductosModel;
