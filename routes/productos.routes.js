@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 // obtener todos los productos
-router.get("/", authMiddleware("") ,obtenerTodosLosProductos);
+router.get("/",obtenerTodosLosProductos);
 // obtener producto por id
 router.get("/:id",obtenerUnProductoPorID);
 // crear producto

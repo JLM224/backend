@@ -20,7 +20,12 @@ const UsuariosSchema = new Schema({
         type: String,
         required: [true, "Campo contraseña obligatorio"],
         trim: true,
-    }
+        // match: [],
+    },
+    idCarrito:{
+        type: String,
+
+    },
 })
 
 const UsuariosModel = model("usuarios", UsuariosSchema);

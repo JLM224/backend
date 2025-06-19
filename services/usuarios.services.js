@@ -1,7 +1,8 @@
 const UsuariosModel = require("../models/usuarios.model")
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
-const { eliminarProductoPorIDServices } = require("./productos.services");
+const { Schema } = require("mongoose");
+const CarritosModel = require("../models/carrito.model");
 
 const obtenerTodosLosUsuariosServices = async() => {
     const usuarios = await UsuariosModel.find()
@@ -20,14 +21,25 @@ const obtenerUsuarioPorIdServices = async(idUsuario) => {
 }
 
 const crearNuevoUsuarioServices = async(body) => {
+    try {
     const nuevoUsuario = new UsuariosModel(body);
+    // se crea el carrito para cada usuario que se crea (se le pasa el id de ese usuario)
+    const carritoUsuario = new CarritosModel({idUsuario: nuevoUsuario._id})
     // hasheo de contraseña
     nuevoUsuario.contrasenia = await argon.hash(nuevoUsuario.contrasenia);
+    // al nuevo usuario se le agrega el id del carrito
+    nuevoUsuario.idCarrito = carritoUsuario._id
     // se guarda el nuevoUsuario
     await nuevoUsuario.save();
+    // se guarda el carrito
+    await carritoUsuario.save();
+    
     return{
         msg:"Usuario creado exitosamente",
         statusCode: 201,
+    }
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -36,7 +48,7 @@ const iniciarSesionServices = async (body) => {
     const usuarioExiste = await UsuariosModel.findOne({nombreUsuario: body.nombreUsuario,});
 
     // verifica si el usuario existe
-    if(!nombreUsuario){
+    if(!usuarioExiste){
         return{
             msg: "usuario y/o contraseña incorrecto. USER",
             statusCode: 400
@@ -57,6 +69,7 @@ const iniciarSesionServices = async (body) => {
     // TOKEN
     const payload = {
         idUsuario: usuarioExiste._id,
+        idCarrito: usuarioExiste.idCarrito,
         rolUsuario: usuarioExiste.rolUsuario,
     };
 
@@ -68,6 +81,7 @@ const iniciarSesionServices = async (body) => {
     return{
         msg:"Usuario Logueado",
         token,
+        rol: usuarioExiste.rolUsuario,
         statusCode: 200
     }
 }

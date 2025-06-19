@@ -77,7 +77,7 @@
    M => Modificacion
 </p>
 
-<p>La solicitud (req) se divide en tres partes: 
+<p>La solicitud (request es un objeto) se divide en tres partes: 
    Head => token
    Params => parametro (id)
    Query => (no modifico la ruta, pero recibo algo informativo "?")
@@ -132,4 +132,20 @@
      <!-- Politica de Cors: es una politica de seguridad propia del navegador que no 
       permite el consumo cruzado, esto se puede solucionar si el backend tiene que 
       tener la configuracion de los cors para que el navegador obtenga la cabecera 
-      y pueda leer la informacion de los datos cruzados -->
+      y pueda leer la informacion de los datos cruzados. CORS (Cross-Origin Resource Sharing)
+      es una política de seguridad que controla qué recursos web pueden ser solicitados desde
+      otro dominio diferente al del servidor original. Sirve para proteger al navegador de
+      solicitudes no autorizadas entre sitios. -->
+
+      <!-- Express-validator: (validaciones por libreria) se comporta como middleware y se 
+      ubica entre la ruta y el controlador (validaciones propias en el services) -->
+      <!-- TIPOS DE VALIDACIONES y SUS MODULOS EN LA LIBRERIA:
+      HEADERS: 
+      PARAMS: Id
+      BODY: Formulario
+      QUERY: Datos
+      CHECK: recorre todas las validaciones cuando encuentra el dato en la respuesta 
+      que arma (un objeto) con una propiedad (location que determina el tipo de validacion que 
+      se va a utilizar) -->
+       
+      <!-- Join:  -->
