@@ -3,10 +3,15 @@ const express = require("express")
 const app = express() //se ejecuta express como un metodo, retorna un objeto
 const cors = require("cors")
 const morgan = require("morgan")
+const path = require("path")
 
 //middlewares
 // (para que el servidor interprete el formato json)
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+// Habilita la parte estatica y donde se guardan las imagenes. El metodo static busca atras donde
+// estas ubicado en el servidor si hay una carpeta "public"
+app.use("/public", express.static(path.join(__dirname, "public")));
 // cors permite que las peticiones con distinto dominio se realicen correctamente
 app.use(cors())
 // morgan por cada solicitud muestra en la consola que ruta y que metodo se utiliza 

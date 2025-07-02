@@ -3,6 +3,8 @@ const argon = require("argon2");
 const jwt = require("jsonwebtoken");
 const { Schema } = require("mongoose");
 const CarritosModel = require("../models/carrito.model");
+const { registroExitoso, recuperarContraseña } = require("../helpers/mensajes.nodemailer");
+const { token } = require("morgan");
 
 const obtenerTodosLosUsuariosServices = async() => {
     const usuarios = await UsuariosModel.find()
@@ -20,7 +22,7 @@ const obtenerUsuarioPorIdServices = async(idUsuario) => {
     }
 }
 
-const crearNuevoUsuarioServices = async(body) => {
+const crearNuevoUsuarioServices = async (body) => {
     try {
     const nuevoUsuario = new UsuariosModel(body);
     // se crea el carrito para cada usuario que se crea (se le pasa el id de ese usuario)
@@ -28,18 +30,31 @@ const crearNuevoUsuarioServices = async(body) => {
     // hasheo de contraseña
     nuevoUsuario.contrasenia = await argon.hash(nuevoUsuario.contrasenia);
     // al nuevo usuario se le agrega el id del carrito
-    nuevoUsuario.idCarrito = carritoUsuario._id
+    nuevoUsuario.idCarrito = carritoUsuario._id;
+
+    const {statusCode, error} = await registroExitoso(body.emailUsuario, body.nombreUsuario)
+
+    if(statusCode === 200){
     // se guarda el nuevoUsuario
     await nuevoUsuario.save();
     // se guarda el carrito
     await carritoUsuario.save();
-    
-    return{
+
+        return{
         msg:"Usuario creado exitosamente",
-        statusCode: 201,
-    }
-    } catch (error) {
-        console.log(error)
+        statusCode: 201};
+    }else{
+        return {
+        error,
+        statusCode,
+        };
+      }
+    }catch (error) {
+        console.log(error);
+        return{
+            error,
+            statusCode: 500,
+        }
     }
 }
 
@@ -102,12 +117,42 @@ const eliminarUsuarioPorIdServices = async (idUsuario) => {
     }
 }
 
+const recuperarContraseñaUsuarioServices = async (emailUsuario) => {
+    try {
+        const usuarioExiste = await UsuariosModel.findOne({emailUsuario})
+
+        if(usuarioExiste){
+            const payload = {
+                idUsuario: usuarioExiste._id
+            }
+
+            const tokenRecuperarContrasenia = jwt.sign(
+                payload,
+                process.env.JWT_SECRET_RECOVEY_PASS)
+            }
+            
+        await recuperarContrasenia(tokenRecuperarContrasenia, usuarioExiste.emailUsuario)
+        
+        return{
+            msg:"Mail enviado",
+            statusCode: 200,
+        }
+    } catch (error) {
+        console.log(error)
+        return{
+            error,
+            statusCode: 500,
+        }
+    }
+}
+
 // exportamos
 module.exports = {
     obtenerTodosLosUsuariosServices,
     obtenerUsuarioPorIdServices,
     crearNuevoUsuarioServices,
     iniciarSesionServices,
+    recuperarContraseñaUsuarioServices,
     actualizarUsuarioPorIdServices,
     eliminarUsuarioPorIdServices
 }

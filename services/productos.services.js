@@ -1,3 +1,4 @@
+const cloudinary = require("../middlewars/cloudinary.config.middleware");
 const ProductosModel = require("../models/producto.model");
 
 // Productos
@@ -36,10 +37,11 @@ const ObtenerProductoPorIDServices = async (idProducto) => {
     }
 }
 
-const crearNuevoProductoServices = async (body) => {
-    const nuevoProducto = new ProductosModel(body)
+const crearNuevoProductoServices = async (body, file) => {
+    const nuevoProducto = new ProductosModel(body);
+    const imagenCloud = await cloudinary.uploader.upload(file.path)
+    nuevoProducto.imagen = imagenCloud.secure_url;
     await nuevoProducto.save();
-    console.log(nuevoProducto)
     // const nuevoProducto = {
     //     //(obtener el ultimo elemento del array)
     //     id: productos[productos.length - 1]?.id + 1 || 1,

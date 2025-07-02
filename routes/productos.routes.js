@@ -8,18 +8,20 @@ const {
     eliminarUnProductoPorID}
     = require("../controllers/productos.controllers");
 const authMiddleware = require("../middlewars/auth.middleware");
+const multerMiddleware = require("../middlewars/multer.middleware");
 const router = express.Router();
 
 
-// obtener todos los productos
+// Obtener todos los productos
 router.get("/",obtenerTodosLosProductos);
-// obtener producto por id
+// Obtener producto por id
 router.get("/:id",obtenerUnProductoPorID);
-// crear producto
-router.post("/", crearNuevoProducto);
-// actualizar producto
+// Crear producto
+router.post("/",multerMiddleware.single("imagen"), crearNuevoProducto);
+// si se manda una imagen (single), si se mandan muchas (array)
+// Actualizar producto
 router.put("/:id", actualizarProductoPorID);
-// eliminar producto
+// Eliminar producto
 router.delete("/:id", eliminarUnProductoPorID);
 
 module.exports = router;

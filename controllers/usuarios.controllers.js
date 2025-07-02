@@ -8,6 +8,7 @@ const {
     iniciarSesionServices,
     actualizarUsuarioPorIdServices,
     eliminarUsuarioPorIdServices,
+    recuperarContraseñaUsuarioServices,
  } = require("../services/usuarios.services")
 //  validationResult => modulo que devuelve todos los mensajes de error
  const {validationResult} = require("express-validator")
@@ -18,6 +19,16 @@ const obtenerTodosLosUsuarios = async (req,res) => {
 }
 
 const obtenerUsuarioPorId = async (req, res) => {
+    const errors = validationResult(req)
+    console.log(errors)
+    
+    // Niega que el array esta vacio y arroja un error
+    if(!errors.isEmpty()){
+        res
+        .status(422)
+        .json({msg:"Se encontraron errores en el servidor", errors: errors.array()})
+    }
+
     const {statusCode, usuario} = await obtenerUsuarioPorIdServices(req.params.id)
     res.status(statusCode).json({usuario})
 }
@@ -32,17 +43,26 @@ const crearNuevoUsuario = async (req,res) => {
         .status(422)
         .json({msg:"Se encontraron errores en el servidor", errors: errors.array()})
     }
-    const {statusCode, msg} = await crearNuevoUsuarioServices(req.body)
-    try {
+    const {statusCode, msg} = await crearNuevoUsuarioServices(req.body);
+    try {    
     res.status(statusCode).json({msg});
     } catch (error) {
         res.status(statusCode).json({error});
     }
-}
+};
 
 const iniciarSesion = async (req, res) => {
     const {statusCode, msg, token, rol} = await iniciarSesionServices(req.body)
     res.status(statusCode).json({msg, token, rol});
+}
+
+const recuperarContraseñaUsuario = async (req, res) => {
+    const {msg, statusCode, error} = await recuperarContraseñaUsuarioServices(req.body.emailUsuario)
+    try {
+        res.status(statusCode).json({msg})
+    } catch (error) {
+        res.status(statusCode).json({error})
+    }
 }
 
 const actualizarUsuario = async (req, res) => {
@@ -64,6 +84,7 @@ module.exports = {
     obtenerUsuarioPorId,
     crearNuevoUsuario,
     iniciarSesion,
+    recuperarContraseñaUsuario,
     actualizarUsuario,
     eliminarUsuarioPorId
 }

@@ -26,15 +26,16 @@ router.post("/",[
     check("nombreUsuario", "Campo Nombre vacio").notEmpty(),
 // isLength => Metodo que recibe un objeto con el min y max de caracteres que debe tener el dato
     check("nombreUsuario", "Campo Nombre vacio").isLength(
-        {min:10}, {max:30}
+        {min:10,max:30}
     ),
 // isEmail => Metodo que recibe el campo y controla si tiene las expresiones regulares para saber 
 //   si el formato esta bien o no
     check("emailUsuario", "Campo Email vacio").isEmail(),
-    check("contraseña", "Error, debe tener un minimo de 8 caracteres").isLength({min:8})
+    check("contrasenia", "Error, debe tener un minimo de 8 caracteres").isLength({min:8})
 ], crearNuevoUsuario)
 // Iniciar sesion
 router.post("/login", iniciarSesion)
+router.post("recoveryPass", recuperarContraseñaUsuario)
 // Actualizar usuario
 router.put("/:id", actualizarUsuario)
 // Eliminar usuario
