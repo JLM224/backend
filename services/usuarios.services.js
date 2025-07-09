@@ -50,7 +50,7 @@ const crearNuevoUsuarioServices = async (body) => {
         };
       }
     }catch (error) {
-        console.log(error);
+        console.log("error al crear el usuario",error);
         return{
             error,
             statusCode: 500,
@@ -117,7 +117,7 @@ const eliminarUsuarioPorIdServices = async (idUsuario) => {
     }
 }
 
-const recuperarContraseñaUsuarioServices = async (emailUsuario) => {
+const recuperarContraseniaUsuarioServices = async (emailUsuario) => {
     try {
         const usuarioExiste = await UsuariosModel.findOne({emailUsuario})
 
@@ -146,13 +146,41 @@ const recuperarContraseñaUsuarioServices = async (emailUsuario) => {
     }
 }
 
+const cambioDeContraseniaUsuarioTokenServices = async (token, nuevaContrasenia) => {
+    try {
+        // para verificar el usuario se le pasa el token y la recoveryPass guardada en
+        //  la variable de entorno
+        const verificarUsuario = jwt.verify(token, process.env.JWT_SECRET_RECOVEY_PASS)
+
+        // se obtiene el id del usuario al que se le quiere cambiar la contraseña
+        const usuario = await UsuariosModel.findOne({_id: verificarUsuario.idUsuario})
+        // se obtiene la contraseña de ese usuario, se hashea la nueva contraseña
+        // y la reemplaza a la anterior
+        usuario.contrasenia = await argon.hash(nuevaContrasenia)
+        // se guarda el usuario con la contraseña actualizada
+        await usuario.save()
+
+        return{
+            msg: "Cambio de contraseña exitoso",
+            statusCode: 200
+        }
+    } catch (error) {
+        console.log(error)
+        return{
+            error,
+            statusCode: 500,
+        }
+    }
+}
+
 // exportamos
 module.exports = {
     obtenerTodosLosUsuariosServices,
     obtenerUsuarioPorIdServices,
     crearNuevoUsuarioServices,
     iniciarSesionServices,
-    recuperarContraseñaUsuarioServices,
+    recuperarContraseniaUsuarioServices,
     actualizarUsuarioPorIdServices,
-    eliminarUsuarioPorIdServices
+    eliminarUsuarioPorIdServices,
+    cambioDeContraseniaUsuarioTokenServices
 }

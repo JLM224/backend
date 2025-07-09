@@ -48,7 +48,7 @@ const recuperarContraseña = async(token, emailUsuario) => {
     <img src="https://i.gifer.com/89WP.gif">
     <b>Segui los siguientes pasos:</b>
     <h3>Hace click en el siguiente enlace</h3>
-    <a href="recuperarContraseña/${token}">Ir a la pagina</a> 
+    <a href="http/localhost://localhost:5273/recoveryPassForm?token=${token}">Ir a la pagina</a> 
     `, // HTML body
   });
   return{

@@ -7,9 +7,12 @@ const {
     iniciarSesion,
     actualizarUsuario,
     eliminarUsuarioPorId,
+    recuperarContraseniaUsuario,
+    cambioDeContraseniaUsuarioToken,
  } = require("../controllers/usuarios.controllers");
 const router = Router();
-const {check} = require("express-validator")
+const {check} = require("express-validator");
+const authMiddleware = require("../middlewars/auth.middleware");
 
 // Obtener todos los usuarios
 router.get("/usuarios", obtenerTodosLosUsuarios);
@@ -26,7 +29,7 @@ router.post("/",[
     check("nombreUsuario", "Campo Nombre vacio").notEmpty(),
 // isLength => Metodo que recibe un objeto con el min y max de caracteres que debe tener el dato
     check("nombreUsuario", "Campo Nombre vacio").isLength(
-        {min:10,max:30}
+        {min:5,max:30}
     ),
 // isEmail => Metodo que recibe el campo y controla si tiene las expresiones regulares para saber 
 //   si el formato esta bien o no
@@ -35,10 +38,11 @@ router.post("/",[
 ], crearNuevoUsuario)
 // Iniciar sesion
 router.post("/login", iniciarSesion)
-router.post("recoveryPass", recuperarContraseñaUsuario)
+//router.post("recoveryPass", recuperarContraseñaUsuario)
 // Actualizar usuario
 router.put("/:id", actualizarUsuario)
 // Eliminar usuario
 router.delete("/:id", eliminarUsuarioPorId)
-
+router.post("./recoveryPassEmail", recuperarContraseniaUsuario)
+router.post("./changeNewPassUser", authMiddleware("usuario") ,cambioDeContraseniaUsuarioToken)
 module.exports = router;
