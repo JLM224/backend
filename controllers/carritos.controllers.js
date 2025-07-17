@@ -1,6 +1,7 @@
 const {agregarProductosCarritoServices,
      eliminarProductosCarritoIdServices,
-     obtenerTodosLosProductosDelCarritoServices}
+     obtenerTodosLosProductosDelCarritoServices,
+     mercadoPagoServices}
      = require("../services/carritos.services")
 
 const obtenerTodosLosProductosDelCarrito = async (req, res) => {
@@ -34,8 +35,18 @@ const eliminarProductoCarritoId = async (req, res) => {
     }
 }
 
+const pagarCarritoMp = async(req, res) => {
+    const {msg, statusCode, error} = await mercadoPagoServices()
+    try {
+        res.status(statusCode).json({msg})
+    } catch (error) {
+        res.status(statusCode).json({error})
+    }
+}
+
 module.exports = {
     obtenerTodosLosProductosDelCarrito,
     agregarProductosCarrito,
-    eliminarProductoCarritoId
+    eliminarProductoCarritoId,
+    pagarCarritoMp
 }

@@ -3,7 +3,7 @@ const argon = require("argon2");
 const jwt = require("jsonwebtoken");
 const { Schema } = require("mongoose");
 const CarritosModel = require("../models/carrito.model");
-const { registroExitoso, recuperarContraseña } = require("../helpers/mensajes.nodemailer");
+const { registroExitoso, recuperarContrasenia } = require("../helpers/mensajes.nodemailer");
 const { token } = require("morgan");
 
 const obtenerTodosLosUsuariosServices = async() => {
